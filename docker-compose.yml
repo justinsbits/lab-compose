@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+    db:
+        container_name: commandersqlcontainer
+        hostname: commandersql
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "sLSr13806!"
+            ACCEPT_EULA: "Y"
+            MSSQL_PID: "Express"
+        ports:
+          - "1433:1433"
+    gqlapi:
+        container_name: commandergqlcontainer
+        hostname: commandergql
+        image: ${DOCKER_REGISTRY-}commandergql
+        build:
+            context: ../services
+            dockerfile: ../services/lab-api-aspnetcore-gql/Dockerfile
+        ports:
+            - "5000:80"
+        depends_on:
+            - db
+    react:
+        container_name: reactcontainer
+        hostname: react
+        image: reactlab
+        build:
+            context: ../clients/react-lab
+        ports:
+            - "3001:80"
+        depends_on:
+            - db
+            - gqlapi
