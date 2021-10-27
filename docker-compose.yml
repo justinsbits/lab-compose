@@ -4,7 +4,7 @@ services:
         hostname: commandersql
         image: "mcr.microsoft.com/mssql/server"
         environment:
-            SA_PASSWORD: "sLSr13806!"
+            SA_PASSWORD: "notAPa$$word@sharedWithWorld"
             ACCEPT_EULA: "Y"
             MSSQL_PID: "Express"
         ports:
